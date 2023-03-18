@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "b85285ca-b856-4526-b6a1-f0f6aaee9541",
+		"name": "OrderService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14520114"
+	},
+	"item": [
+		{
+			"name": "placeOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderLineItemsDtoList\":[\r\n        {\r\n            \"skuCode\":\"sku1\",\r\n            \"price\" : 10000,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"skuCode\":\"sku2\",\r\n            \"price\" : 20000,\r\n            \"quantity\": 1\r\n        }\r\n\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/v1/order/placeOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"v1",
+						"order",
+						"placeOrder"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

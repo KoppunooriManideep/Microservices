@@ -1,0 +1,9 @@
+com\manideep\productservice\model\Product.class
+com\manideep\productservice\repository\ProductRepository.class
+com\manideep\productservice\conroller\ProductController.class
+com\manideep\productservice\model\Product$ProductBuilder.class
+com\manideep\productservice\service\ProductService.class
+com\manideep\productservice\dto\ProductRequest.class
+com\manideep\productservice\ProductServiceApplication.class
+com\manideep\productservice\dto\ProductResponse.class
+com\manideep\productservice\service\ProductServiceImpl.class

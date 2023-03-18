@@ -1,5 +1,7 @@
 package com.manideep.orderservice.service;
 
+import com.manideep.orderservice.dto.InventoryDetails;
+import com.manideep.orderservice.dto.InventoryResponse;
 import com.manideep.orderservice.dto.OrderLineItemsDto;
 import com.manideep.orderservice.dto.OrderRequest;
 import com.manideep.orderservice.model.Order;
@@ -8,6 +10,7 @@ import com.manideep.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +23,9 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private WebClient webClient;
+
     @Override
     public void placeOrder(OrderRequest orderRequest){
         Order order =new Order();
@@ -28,7 +34,23 @@ public class OrderServiceImpl implements OrderService{
                 .map(this::mapToOrder).collect(Collectors.toList());
         order.setOrderLineItemsList(orderLineItemsList);
 
-        orderRepository.save(order);
+        List<String> skuCodesList = order.getOrderLineItemsList().stream()
+                .map(OrderLineItems::getSkuCode).collect(Collectors.toList());
+
+        //calling invenory Microservice tocheck if item is in the stock
+        InventoryResponse response = webClient.get()
+                .uri("http://localhost:8082//v1/inventory/instockStatus",
+                        uriBuilder -> uriBuilder.queryParam("skuCode",skuCodesList).build())
+                .retrieve()
+                .bodyToMono(InventoryResponse.class)
+                .block();
+        boolean allProductsInstock = response.getInventoryDetailsList().stream().allMatch(InventoryDetails::isInStock);
+        if(allProductsInstock){
+            orderRepository.save(order);
+        } else {
+            throw new IllegalArgumentException("One or More Products are out of stock");
+        }
+
     }
 
     private OrderLineItems mapToOrder(OrderLineItemsDto orderLineItemsDto) {

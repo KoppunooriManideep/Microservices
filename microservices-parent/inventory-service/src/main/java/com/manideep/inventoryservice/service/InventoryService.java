@@ -1,5 +1,9 @@
 package com.manideep.inventoryservice.service;
 
+import com.manideep.inventoryservice.dto.InventoryResponse;
+
+import java.util.List;
+
 public interface InventoryService {
-    boolean isInstock(String skuCode);
+    InventoryResponse isInstock(List<String> skuCode);
 }

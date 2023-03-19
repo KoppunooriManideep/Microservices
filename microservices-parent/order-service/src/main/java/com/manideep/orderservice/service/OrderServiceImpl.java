@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService{
     private OrderRepository orderRepository;
 
     @Autowired
-    private WebClient webClient;
+    private WebClient.Builder webClientBuilder;
 
     @Override
     public void placeOrder(OrderRequest orderRequest){
@@ -38,8 +38,8 @@ public class OrderServiceImpl implements OrderService{
                 .map(OrderLineItems::getSkuCode).collect(Collectors.toList());
 
         //calling invenory Microservice tocheck if item is in the stock
-        InventoryResponse response = webClient.get()
-                .uri("http://localhost:8082//v1/inventory/instockStatus",
+        InventoryResponse response = webClientBuilder.build().get()
+                .uri("http://inventory-service/v1/inventory/instockStatus",
                         uriBuilder -> uriBuilder.queryParam("skuCode",skuCodesList).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse.class)

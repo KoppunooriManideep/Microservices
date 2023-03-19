@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "4c1fefd6-d1e4-4a58-a15a-a7ce2e842636",
+		"name": "api-gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14520114"
+	},
+	"item": [
+		{
+			"name": "placeOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderLineItemsDtoList\":[\r\n        {\r\n            \"skuCode\":\"sku1\",\r\n            \"price\" : 15000,\r\n            \"quantity\": 5\r\n        }\r\n\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/order/placeOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"order",
+						"placeOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllProducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/product/getAllProducts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"product",
+						"getAllProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "eureka-server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/eureka/web",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eureka",
+						"web"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
